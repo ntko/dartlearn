@@ -19,7 +19,8 @@ class WebsvrSink extends RequestSink {
   ///
   /// Configuration of database connections, [HTTPCodecRepository] and other per-isolate resources should be done in this constructor.
   WebsvrSink(ApplicationConfiguration appConfig) : super(appConfig) {
-    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    logger.onRecord.listen(
+        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
   }
 
   /// All routes must be configured in this method.
@@ -30,11 +31,12 @@ class WebsvrSink extends RequestSink {
   void setupRouter(Router router) {
     // Prefer to use `pipe` and `generate` instead of `listen`.
     // See: https://aqueduct.io/docs/http/request_controller/
-    router
-      .route("/example")
-      .listen((request) async {
-        return new Response.ok({"key": "value"});
-      });
+    router.route("/example").listen((request) async {
+      return new Response.ok({"key": "value"});
+    });
+    router.route('/').listen((request) async {
+      return new Response.ok('Hello world')..contentType = ContentType.TEXT;
+    });
   }
 
   /// Final initialization method for this instance.
