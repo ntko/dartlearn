@@ -34,6 +34,11 @@ class Websvr30Channel extends ApplicationChannel {
         return new Response.ok({"key": "value"});
       });
 
+    router.route("/").linkFunction((request)async {
+        return new Response.ok("Hello world!")
+        ..contentType = ContentType.TEXT;
+      });
+
     return router;
   }
 }

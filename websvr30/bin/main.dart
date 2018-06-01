@@ -3,7 +3,7 @@ import 'package:websvr30/websvr30.dart';
 Future main() async {
   var app = new Application<Websvr30Channel>()
       ..options.configurationFilePath = "config.yaml"
-      ..options.port = 8888;
+      ..options.port = 8081;
 
   await app.start(numberOfInstances: 2);
 
