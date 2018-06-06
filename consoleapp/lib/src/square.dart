@@ -1,2 +1,2 @@
-void toStringSqu() => "I 'm square.";
-void toStringTri() => "I 'm triangle.";
+void toString() => "Square.";
+void sayHello() => "Hello,I 'm Square.";

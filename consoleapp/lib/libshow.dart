@@ -1,7 +1,7 @@
-void printall3(){
-  print('From libshow.dart printall3.');
+void toString(){
+  print('From libshow.dart toString.');
 }
 
-void printall4(){
-  print('From libshow.dart printall4.');
+void sayHello(){
+  print('From libshow.dart sayHello.');
 }

@@ -1,15 +1,13 @@
-export 'src/square.dart' hide toStringTri;
-export 'src/triangle.dart' hide toStringSqu;
+export 'src/square.dart' hide toString;
+export 'src/triangle.dart' hide sayHello;
 
-import 'src/square.dart' hide toStringTri;
-import 'src/triangle.dart' hide toStringSqu;
+import 'src/square.dart' as Square hide toString;
+import 'src/triangle.dart' as Triangle hide sayHello;
 
-void printall1(){
-  print('From libraryuse.dart printall1:${toStringTri()}');
-  print('From libraryuse.dart printall1:${toStringSqu()}');
+void toString(){
+  print('From libraryuse.dart toString:${Triangle.toString()}');
 }
 
-void printall2(){
-  print('From libraryuse.dart printall2:${toStringTri()}');
-  print('From libraryuse.dart printall2:${toStringSqu()}');
+void sayHello(){
+  print('From libraryuse.dart sayHello:${Square.sayHello()}');
 }
