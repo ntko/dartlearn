@@ -7,6 +7,9 @@
         {
             "name": "Dart",
             "program": "${workspaceFolder}/bin/main.dart",
+            "args": [
+                "1","test"
+            ],
             "request": "launch",
             "type": "dart"
         }

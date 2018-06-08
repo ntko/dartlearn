@@ -10,6 +10,40 @@ import 'package:consoleapp/deferdlib.dart' deferred as lazyload;
 
 import "dart:async";
 
+// This is where the app starts executing.
+main(List<String> arguments) {
+
+  //arguments...
+  print("arguments=$arguments");
+
+  //basic expression print
+  print('Hello world: consoleapp.calculate():${consoleapp.calculate()}!');
+
+  //library use...
+  libuse.toString();
+  libshow.sayHello();
+
+  testNumbers();
+
+  testLazyload();
+
+  testStrings();
+  testLists();
+  testMaps();
+  testRunes();
+  testSymbols();
+
+  testOptionalPara(gifts: {'a': 'aValue', 'b': 'bValue'}, list: [3, 4, 5]);
+
+  testOptionalPara(list: [5, 4, 4]);
+
+  testAonymousFunction();
+
+  testClosures();
+
+  print('End.');
+}
+
 // Define a function. and print variable
 printInteger(int aNumber) {
   print(
@@ -21,48 +55,23 @@ printDouble(double dNumber) {
       'function in main.dart, printDouble:The number is ${dNumber.toStringAsFixed(4)}.'); // Print to console.
 }
 
-Future lazyloadTest() async {
-  await lazyload.loadLibrary();
-  lazyload.print_Deferred();
-}
-
-// This is where the app starts executing.
-main(List<String> arguments) {
-  //basic expression print
-  print('Hello world: consoleapp.calculate():${consoleapp.calculate()}!');
-
-  //library use...
-  libuse.toString();
-  libshow.sayHello();
-
-  lazyloadTest();
-
-//althought it's an int, if not initialized, it will == null,NOT 0
+testNumbers() {
+  //althought it's an int, if not initialized, it will == null,NOT 0
   int lineCount;
   assert(lineCount == null);
   print('lineCount = ${(lineCount??0)*2}.');
 
 //Numbers ****************************
-
   var aNumber = 42; // Declare and initialize a variable.
   var dNumber = 3.1415926;
-  //Call a function.basic variable print
+  //Call a function. basic variable print
   printInteger(aNumber);
   printDouble(dNumber);
+}
 
-  testStrings();
-  testLists();
-  testMaps();
-  testRunes();
-  testSymbols();
-
-  testOptionalPara(
-   gifts: {'a':'aValue','b':'bValue'},
-  list: [3,4,5]) ;
-
-  testOptionalPara(list: [5,4,4]);
-
-  print('End.');
+Future testLazyload() async {
+  await lazyload.loadLibrary();
+  lazyload.print_Deferred();
 }
 
 testStrings() {
@@ -130,6 +139,7 @@ testRunes() {
 testSymbols() {
   print("\n testSymbols-------------------\n");
   var list = [];
+  print("list = $list");
   print("#list = ${(#list).hashCode}");
 }
 
@@ -143,4 +153,28 @@ void testOptionalPara(
   print("\n testOptionalPara-------------------\n");
   print('list:  $list');
   print('gifts: $gifts');
+}
+
+void testAonymousFunction() {
+  print("\n testAonymousFunction-------------------\n");
+  var list = ['apples', 'bananas', 'oranges'];
+  list.forEach((item) => print('${list.indexOf(item)}: $item'));
+}
+
+/// Returns a function that adds [addBy] to the
+/// function's argument.
+Function makeAdder(num addBy) {
+  return (num i) => addBy + i;
+}
+
+void testClosures() {
+  print("\n testClosures-------------------\n");
+  // Create a function that adds 2.
+  var add2 = makeAdder(2);
+
+  // Create a function that adds 4.
+  var add4 = makeAdder(4);
+
+  print("add2(3) = ${add2(3)}");
+  print("add4(3) = ${add4(3)}");
 }
