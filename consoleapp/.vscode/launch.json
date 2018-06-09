@@ -10,6 +10,9 @@
             "args": [
                 "1","test"
             ],
+            "vmAdditionalArgs": [
+                "--preview-dart-2"
+            ],
             "request": "launch",
             "type": "dart"
         }

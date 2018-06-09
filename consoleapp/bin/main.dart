@@ -12,7 +12,6 @@ import "dart:async";
 
 // This is where the app starts executing.
 main(List<String> arguments) {
-
   //arguments...
   print("arguments=$arguments");
 
@@ -40,6 +39,10 @@ main(List<String> arguments) {
   testAonymousFunction();
 
   testClosures();
+
+  testException();
+
+  testClass();
 
   print('End.');
 }
@@ -177,4 +180,45 @@ void testClosures() {
 
   print("add2(3) = ${add2(3)}");
   print("add4(3) = ${add4(3)}");
+}
+
+void testException() {
+  print("\n testException-------------------\n");
+  try {
+    var a = 12/0;
+    print("a=$a\n");
+    throw new FormatException('Expected at least 1 section');
+  } on Exception catch (e) {
+    print('Exception details:\n $e');
+  } catch (e, s) {
+    print('Exception details:\n $e');
+    print('Stack trace:\n $s');
+  } finally {
+    print('finally executed\n');
+  }
+}
+
+class Point{
+  num x;
+  num y;
+  Point(num this.x,[num this.y=4]);
+  String toString()=>'(x:$x,y:$y)';
+}
+
+void testClass(){
+  print("\n testClass-------------------\n");
+  var p1 = new Point(2,4);
+  var p2 = new Point(2);
+  var p3 = Point(3);  //!!! NEED --preview-dart-2 VM options, see launch.json
+
+  if(identical(p1, p2)){
+    print("identical(p1, p2) = true;\n");
+  }else{
+    print("identical(p1, p2) = false;\n");
+  }
+  Type type = p1.runtimeType;
+  print('The type.toString() of p1 is ${type.toString()}\n');
+  print('The type.hashCode of p1 is ${type.hashCode}\n');
+  print('The type.runtimeType of type is ${type.runtimeType}\n');
+  print('p3 = $p3\n');
 }
