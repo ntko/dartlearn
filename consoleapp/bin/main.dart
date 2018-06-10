@@ -185,7 +185,7 @@ void testClosures() {
 void testException() {
   print("\n testException-------------------\n");
   try {
-    var a = 12/0;
+    var a = 12 / 0;
     print("a=$a\n");
     throw new FormatException('Expected at least 1 section');
   } on Exception catch (e) {
@@ -198,22 +198,47 @@ void testException() {
   }
 }
 
-class Point{
+class Point {
   num x;
   num y;
-  Point(num this.x,[num this.y=4]);
-  String toString()=>'(x:$x,y:$y)';
+  num area;
+  //**`syntactic sugar`** for assigning a constructor argument to an instance variable.
+  //and with
+  Point(num this.x, [num this.y = 4]) : area = x * y; //Initializer list
+  Point.fromX_And_Area(num x, num area) : this(x, area ~/ x); //named constructor and Redirecting constructors
+  Point.initializerTest(num ix, num iy):x=ix,y=iy;
+  String toString() => '(x:$x,y:$y,area:$area)';
 }
 
-void testClass(){
-  print("\n testClass-------------------\n");
-  var p1 = new Point(2,4);
-  var p2 = new Point(2);
-  var p3 = Point(3);  //!!! NEED --preview-dart-2 VM options, see launch.json
+class RectPoint extends Point {
+  num w,h;
+  // Point does not have a default constructor;
+  // we must call super.fromX_And_Area(...).
+  RectPoint.fromX_And_Area2(num x, num area) : super.fromX_And_Area(x,area) {
+    print('in RectPoint');
+    w=x;
+    h=area~/x;
+  }
+}
 
-  if(identical(p1, p2)){
+//Constant constructors
+class ImmutablePoint {
+  static final ImmutablePoint origin = const ImmutablePoint(0, 0);
+  final num x, y;
+  const ImmutablePoint(this.x, this.y);
+  String toString() => '(x:$x,y:$y,${origin.runtimeType})';
+}
+
+void testClass() {
+  print("\n testClass-------------------\n");
+  var p1 = new Point(2, 4);
+  var p2 = new Point(2);
+  var p3 = Point(3); //!!! NEED --preview-dart-2 VM options, see launch.json
+  var p4 = Point.fromX_And_Area(3, 15); //named constructor
+
+  if (identical(p1, p2)) {
     print("identical(p1, p2) = true;\n");
-  }else{
+  } else {
     print("identical(p1, p2) = false;\n");
   }
   Type type = p1.runtimeType;
@@ -221,4 +246,7 @@ void testClass(){
   print('The type.hashCode of p1 is ${type.hashCode}\n');
   print('The type.runtimeType of type is ${type.runtimeType}\n');
   print('p3 = $p3\n');
+  print('p4 = $p4\n');
+
+  print('ImmutablePoint.origin = ${ImmutablePoint.origin}\n');
 }
