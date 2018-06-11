@@ -44,6 +44,10 @@ main(List<String> arguments) {
 
   testClass();
 
+  testGetterAndSetter();
+
+  testImplicitInterface();
+
   print('End.');
 }
 
@@ -322,27 +326,90 @@ void testClass() {
   print('The type.runtimeType of type is ${type.runtimeType}\n');
 
   print('ImmutablePoint.origin = ${ImmutablePoint.origin}\n');
- 
+
   print("\n testClass begin test Factory constructor-------------------\n");
 
   var logger = new Logger('UI');
-  logger.log('LOGGER: Button clicked\n');  
+  logger.log('LOGGER: Button clicked\n');
 
   var logger2 = new Logger('UI');
-  logger2.log('LOGGER2: Button clicked 2\n');  
+  logger2.log('LOGGER2: Button clicked 2\n');
 
   var logger3 = new Logger('LOGIC');
-  logger3.log('LOGGER3: Button clicked 3\n');  
+  logger3.log('LOGGER3: Button clicked 3\n');
 
- if (identical(logger, logger2)) {
+  if (identical(logger, logger2)) {
     print("identical(logger, logger2) = true;\n");
   } else {
     print("identical(logger, logger2) = false;\n");
-  } 
+  }
 
   if (identical(logger, logger3)) {
     print("identical(logger, logger3) = true;\n");
   } else {
     print("identical(logger, logger3) = false;\n");
-  }  
+  }
+}
+
+class Rectangle {
+  num left, top, width, height;
+
+  Rectangle(this.left, this.top, this.width, this.height);
+
+  // Define two calculated properties: right and bottom.
+  num get right => left + width;
+  set right(num value) => left = value - width;
+  num get bottom => top + height;
+  set bottom(num value) => top = value - height;
+  String toString() =>
+      '(left:$left,top:$top,width:$width,height:$height,right:$right,bottom:$bottom)';
+}
+
+void testGetterAndSetter() {
+  print("\n testGetterAndSetter-------------------\n");
+  var rect = new Rectangle(3, 4, 20, 15);
+  print('rect = $rect\n');
+
+  print("\n Now test operator ++ for getter-------------------\n");
+  rect.right++;
+  print('rect = $rect after rect.right++\n');
+
+  rect.left++;
+  print('rect = $rect after rect.left++\n');
+
+  rect.bottom++;
+  print('rect = $rect after rect.bottom++\n');
+}
+
+class Person {
+  // In the interface, but visible only in this library.
+  final _name;
+
+  // Not in the interface, since this is a constructor.
+  Person(this._name);
+
+  // In the interface.
+  String greet(String who) => 'Hello, $who. I am $_name.';
+}
+
+// An implementation of the Person interface.
+class Impostor implements Person {
+  
+  get _name => 'tanger';
+
+  var _private = 'dd';
+
+  String greet(String who) =>
+      'Hi $who. Do you know who I am? may be i\'m $_name';
+}
+
+String greetBob(Person person) => person.greet('Bob');
+
+void testImplicitInterface() {
+  print("\n testImplicitInterface-------------------\n");
+  var p = Person('Kathy');
+  print(greetBob(p));
+  var ip = Impostor();
+  print(greetBob(ip));
+  print("ip._name = ${ip._name},ip._private=${ip._private}");
 }
