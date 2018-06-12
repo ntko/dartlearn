@@ -48,7 +48,15 @@ main(List<String> arguments) {
 
   testImplicitInterface();
 
-  print('End.');
+  testNoSuchMethod();
+
+  testEnumsAndSwitchCase();
+
+  testGenerics();
+
+  testFutures();
+
+  print('\n------------End of Main().');
 }
 
 // Define a function. and print variable
@@ -82,7 +90,7 @@ Future testLazyload() async {
 }
 
 testStrings() {
-  print("\n testStrings-------------------\n");
+  print("\n******-----testStrings-------------------\n");
   var stringA = 'It\'s a good film.';
   var stringB = "It's a good film.";
   var stringC = 'It\'s a' + " good film.";
@@ -95,8 +103,8 @@ testStrings() {
 }
 
 testLists() {
-  print("\n testLists-------------------\n");
-  var list = [1, 2, 3];
+  print("\n******-----testLists-------------------\n");
+  var list = <int>[1, 2, 3];
   //Compiled and execute ok. but the result is unespected as:list[2] = [1, 2, 3][2]
   print("list[2] = $list[2]");
   //Correct way:
@@ -104,8 +112,8 @@ testLists() {
 }
 
 testMaps() {
-  print("\n testMaps-------------------\n");
-  var testMap = {"key1": "value1"};
+  print("\n******-----testMaps-------------------\n");
+  var testMap = <String, String>{"key1": "value1"};
 
   testMap["key2"] = "value2";
   testMap.putIfAbsent("key2", () => "newvalue2");
@@ -114,7 +122,7 @@ testMaps() {
 }
 
 testRunes() {
-  print("\n testRunes-------------------\n");
+  print("\n******-----testRunes-------------------\n");
   var clapping = '\u{1f44f}';
   print(clapping);
   print(clapping.codeUnits);
@@ -124,7 +132,7 @@ testRunes() {
       '\u2665  \u{1f605}  \u{1f60e}  \u{1f47b}  \u{1f596}  \u{1f44d}');
   print(new String.fromCharCodes(input));
 
-  print("\n test String Reverse-------------------\n");
+  print("\n******-----test String Reverse-------------------\n");
   var testSring1 = "Music \u{1d11e} for the win"; // Music 𝄞 for the win
   //reverse using split
   print(
@@ -144,7 +152,7 @@ testRunes() {
 }
 
 testSymbols() {
-  print("\n testSymbols-------------------\n");
+  print("\n******-----testSymbols-------------------\n");
   var list = [];
   print("list = $list");
   print("#list = ${(#list).hashCode}");
@@ -157,13 +165,13 @@ void testOptionalPara(
       'second': 'cotton',
       'third': 'leather'
     }}) {
-  print("\n testOptionalPara-------------------\n");
+  print("\n******-----testOptionalPara-------------------\n");
   print('list:  $list');
   print('gifts: $gifts');
 }
 
 void testAonymousFunction() {
-  print("\n testAonymousFunction-------------------\n");
+  print("\n******-----testAonymousFunction-------------------\n");
   var list = ['apples', 'bananas', 'oranges'];
   list.forEach((item) => print('${list.indexOf(item)}: $item'));
 }
@@ -175,7 +183,7 @@ Function makeAdder(num addBy) {
 }
 
 void testClosures() {
-  print("\n testClosures-------------------\n");
+  print("\n******-----testClosures-------------------\n");
   // Create a function that adds 2.
   var add2 = makeAdder(2);
 
@@ -187,9 +195,9 @@ void testClosures() {
 }
 
 void testException() {
-  print("\n testException-------------------\n");
+  print("\n******-----testException-------------------\n");
   try {
-    var a = 12 / 0;
+    var a = 12.0 / 0.0;
     print("a=$a\n");
     throw new FormatException('Expected at least 1 section');
   } on Exception catch (e) {
@@ -289,7 +297,7 @@ class Logger {
 }
 
 void testClass() {
-  print("\n testClass-------------------\n");
+  print("\n******-----testClass-------------------\n");
   var p0 = new Point();
   var p1 = new Point.init(2, 4);
   var p2 = new Point.init(2);
@@ -303,13 +311,13 @@ void testClass() {
   print('p3 = $p3\n');
   print('p4 = $p4\n');
 
-  print("\n testClass begin new RectPoint-------------------\n");
+  print("\n******-----testClass begin new RectPoint-------------------\n");
 
   var rp0 = new RectPoint();
   print('rp0 = $rp0\n');
 
   print(
-      "\n testClass begin new RectPoint.fromX_And_Area(3,18)-------------------\n");
+      "\n******-----testClass begin new RectPoint.fromX_And_Area(3,18)-------------------\n");
 
   var rp1 = new RectPoint.fromX_And_Area(3, 18);
   print('rp1 = $rp1\n');
@@ -327,7 +335,8 @@ void testClass() {
 
   print('ImmutablePoint.origin = ${ImmutablePoint.origin}\n');
 
-  print("\n testClass begin test Factory constructor-------------------\n");
+  print(
+      "\n******-----testClass begin test Factory constructor-------------------\n");
 
   var logger = new Logger('UI');
   logger.log('LOGGER: Button clicked\n');
@@ -366,7 +375,7 @@ class Rectangle {
 }
 
 void testGetterAndSetter() {
-  print("\n testGetterAndSetter-------------------\n");
+  print("\n******-----testGetterAndSetter-------------------\n");
   var rect = new Rectangle(3, 4, 20, 15);
   print('rect = $rect\n');
 
@@ -394,7 +403,6 @@ class Person {
 
 // An implementation of the Person interface.
 class Impostor implements Person {
-  
   get _name => 'tanger';
 
   var _private = 'dd';
@@ -406,10 +414,112 @@ class Impostor implements Person {
 String greetBob(Person person) => person.greet('Bob');
 
 void testImplicitInterface() {
-  print("\n testImplicitInterface-------------------\n");
+  print("\n******-----testImplicitInterface-------------------\n");
   var p = Person('Kathy');
   print(greetBob(p));
   var ip = Impostor();
   print(greetBob(ip));
   print("ip._name = ${ip._name},ip._private=${ip._private}");
+}
+
+class Foo {
+  num foo(x) => 1.2;
+}
+
+class MockFoo implements Foo {
+  @override
+  noSuchMethod(Invocation i) {
+    if (i.memberName == #foo) {
+      if (i.isMethod &&
+          i.positionalArguments.length == 1 &&
+          i.namedArguments.isEmpty) {
+        // ... implement mock behavior for `foo` here.
+        print(
+            "\n MockFoo:noSuchMethod:${i.memberName} invoked with argu ${i.positionalArguments[0]}\n");
+        return 1.5;
+      } else {
+        return super.noSuchMethod(i);
+      }
+    } else {
+      return super.noSuchMethod(i);
+    }
+  }
+}
+
+void testNoSuchMethod() {
+  print("\n******-----testNoSuchMethod-------------------\n");
+  var mf = MockFoo();
+  var result = mf.foo('Ok,the foo is mocked!');
+  print("result = $result");
+}
+
+enum Color { red, green, blue, pink, yellow }
+
+void testEnumsAndSwitchCase() {
+  print("\n******-----testEnumsAndSwitchCase-------------------\n");
+  Color clrBlue = Color.blue;
+  print("clrBlue.index = ${clrBlue.index}");
+  List<Color> allColors = Color.values;
+  print("allColors = ${allColors}");
+
+  switch (clrBlue) {
+    case Color.red:
+      print('Red as roses!');
+      break;
+    case Color.green:
+    case Color.pink:
+      print('Green as grass! or pink as flower.');
+      continue fallthrough; //test fall through
+
+    fallthrough:
+    //print('fallthrough.....'); //NOTE: NOT ALLOWED!
+    default: // Without this, you see a WARNING.
+      print("clrBlue = ${clrBlue}"); // 'Color.blue'
+  }
+}
+
+class SomeBaseClass {
+  @override
+  String toString() {
+    // TODO: implement toString
+    String toString() => "this is a 'SomeBaseClass' instance.";
+    return super.toString();
+  }
+}
+
+class FooGeneric<T extends SomeBaseClass> {
+  // Implementation goes here...
+  String toString() => "Instance of 'FooGeneric<$T>'";
+}
+
+class Extender extends SomeBaseClass {
+  @override
+  String toString() => "this is a 'Extender' instance.";
+}
+
+void testGenerics() {
+  print("\n******-----testGenerics-------------------\n");
+  var someBaseClassFoo = new FooGeneric<SomeBaseClass>();
+  var extenderFoo = new FooGeneric<Extender>();
+  var foo = new FooGeneric(); //It’s also OK to specify no generic argument
+  print("someBaseClassFoo:$someBaseClassFoo");
+  print("extenderFoo:$extenderFoo");
+  print("foo:$foo"); // Instance of 'Foo<SomeBaseClass>'
+  //var errfoo = new FooGeneric<Object>(); //Specifying any non-SomeBaseClass type results in an error!!
+  print(
+      "extenderFoo is FooGeneric<Extender>: ${extenderFoo is FooGeneric<Extender>}");
+  print(
+      "extenderFoo is FooGeneric<SomeBaseClass>:${extenderFoo is FooGeneric<SomeBaseClass>}");
+  print(
+      "someBaseClassFoo is FooGeneric<Extender>: ${someBaseClassFoo is FooGeneric<Extender>}");
+}
+
+Future<String> CheckVersion() async => '2.0.0';
+
+void testFutures() async {
+  print("\n******-----testFutures-------------------\n");
+  var result = await () async => '1.0.0';
+  var result2 = await CheckVersion();
+  print('In testFutures: version is ${result},result.type=${result.runtimeType}');
+  print('In testFutures: result2 is ${result2},result2.type=${result2.runtimeType}');
 }
