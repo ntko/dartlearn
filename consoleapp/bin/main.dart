@@ -7,6 +7,7 @@ import 'package:consoleapp/libshow.dart' as libshow show sayHello;
 //packages on demand, perhaps reflection??
 
 import 'package:consoleapp/deferdlib.dart' deferred as lazyload;
+import 'package:consoleapp/todo.dart';
 
 import "dart:async";
 
@@ -653,4 +654,10 @@ void testGeneratorAsync() async{
   var asycSream3 = asynchronousNaturalsTo(6);
   var lastPos =await lastPositive(asycSream3);
   print('\lastPos=$lastPos'); 
+}
+
+//Custom metadata
+@Todo('seth', 'make this do something','2018-6-22')
+testMetadata(){
+  //You can retrieve metadata at runtime using reflection.
 }
