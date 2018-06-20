@@ -1,13 +1,13 @@
-
 void testLibCoreAsyc() async {
   print("\n******-----testLibCoreAsyc-------------------\n");
 
-  var result0 = await testLibCore();
-  print(
-      'In testLibCoreAsyc: result0 is ${result0}');
+  var result0 = await _testLibCoreOfString();
+  print('In testLibCoreAsyc: result0 is ${result0}');
+  result0 = await _testLibCoreOfList();
+  print('In testLibCoreAsyc: result0 is ${result0}');
 }
 
-testLibCore() async {
+_testLibCoreOfString() async {
   // Check whether a string contains another string.
   print("'Never odd or even'.contains('odd')=${
       'Never odd or even'.contains('odd')}");
@@ -46,7 +46,8 @@ testLibCore() async {
 
   // Get all the UTF-16 code units in the string.
   var codeUnitList = 'Never odd or even'.codeUnits.toList();
-  print(codeUnitList[0] == 78);
+  print("codeUnitList = $codeUnitList");
+  print("codeUnitList[0] = ${codeUnitList[0]}");
 
   //Converting to uppercase or lowercase
 
@@ -124,5 +125,44 @@ testLibCore() async {
     match.group(0)=${match.group(0)}.
     '''); // 15, then 20
   }
-  return 'End of testLibCore..';
+  return 'End of _testLibCoreOfString..';
+}
+
+_testLibCoreOfList() async {
+// Use a List constructor.
+  var vegetables = new List();
+  vegetables.add(1);
+  vegetables.add("potato");
+  print('vegetables = $vegetables,lenth=${vegetables.length}');
+
+  // Or simply use a list literal.
+  var fruits = ['apples', 'oranges'];
+  // Add to a list.
+  fruits.add('kiwis');
+  // Add multiple items to a list.
+  fruits.addAll(['grapes', 'bananas']);
+  // Get the list length.
+  print('fruits = $fruits,lenth=${fruits.length}');
+
+  // Remove a single item.
+  var appleIndex = fruits.indexOf('apples');
+  fruits.removeAt(appleIndex);
+  print('After removeAt($appleIndex),fruits = $fruits,lenth=${fruits.length}');
+
+  // Remove all elements from a list.
+  fruits.clear();
+
+  //Use indexOf() to find the index of an object in a list:
+
+  fruits = ['bananas', 'apples', 'oranges'];
+  print('Reset fruits to $fruits');
+  // Access a list item by index.
+  print('fruits[0] = ${fruits[0]}');
+  print("fruits.indexOf('apples')=${fruits.indexOf('apples')}");
+
+  // Sort a list.
+  fruits.sort((a, b) => a.compareTo(b));
+  print('After sort,fruits = $fruits');
+
+  return 'End of _testLibCoreOfList..';
 }

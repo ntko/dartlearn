@@ -58,12 +58,17 @@ main(List<String> arguments) {
   classtest.testCallableClass();
   classtest.testEnumsAndSwitchCase();
 
+  
   othertest.testGenerics();
+
+  //the following will output the latest, why? more await..
   othertest.testFutures();
+  
   othertest.testGeneratorSync();
   othertest.testGeneratorAsync();
 
   corelibtest.testLibCoreAsyc();
+
 
   print('\n------------End of Main().');
 }
