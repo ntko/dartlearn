@@ -12,6 +12,8 @@ import 'package:consoleapp/exception.dart' as exceptiontest;
 import 'package:consoleapp/class.dart' as classtest;
 import 'package:consoleapp/others.dart' as othertest;
 
+import 'package:consoleapp/corelib.dart' as corelibtest;
+
 import 'package:consoleapp/todo.dart';
 
 import "dart:async";
@@ -60,6 +62,8 @@ main(List<String> arguments) {
   othertest.testFutures();
   othertest.testGeneratorSync();
   othertest.testGeneratorAsync();
+
+  corelibtest.testLibCoreAsyc();
 
   print('\n------------End of Main().');
 }
