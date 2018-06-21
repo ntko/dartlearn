@@ -3,11 +3,22 @@ void testLibCoreAsyc() async {
 
   var result0 = await _testLibCoreOfString();
   print('In testLibCoreAsyc: result0 is ${result0}');
+  
   result0 = await _testLibCoreOfList();
+  print('In testLibCoreAsyc: result0 is ${result0}');
+
+  result0 = await _testLibCoreOfSet();
+  print('In testLibCoreAsyc: result0 is ${result0}');
+
+  result0 = await _testLibCoreOfMap();
+  print('In testLibCoreAsyc: result0 is ${result0}');
+
+  result0 = await _testLibCoreCommon();
   print('In testLibCoreAsyc: result0 is ${result0}');
 }
 
 _testLibCoreOfString() async {
+  print("\n******-----begin _testLibCoreOfString------\n");
   // Check whether a string contains another string.
   print("'Never odd or even'.contains('odd')=${
       'Never odd or even'.contains('odd')}");
@@ -129,14 +140,16 @@ _testLibCoreOfString() async {
 }
 
 _testLibCoreOfList() async {
+  print("\n******-----begin _testLibCoreOfList------\n");
 // Use a List constructor.
   var vegetables = new List();
   vegetables.add(1);
   vegetables.add("potato");
+  vegetables.add("['add ','a ','list']");
   print('vegetables = $vegetables,lenth=${vegetables.length}');
 
   // Or simply use a list literal.
-  var fruits = ['apples', 'oranges'];
+  var fruits = <String>['apples', 'oranges'];
   // Add to a list.
   fruits.add('kiwis');
   // Add multiple items to a list.
@@ -165,4 +178,191 @@ _testLibCoreOfList() async {
   print('After sort,fruits = $fruits');
 
   return 'End of _testLibCoreOfList..';
+}
+
+_testLibCoreOfSet() async {
+  print("\n******-----begin _testLibCoreOfSet------\n");
+
+  var ingredients = new Set();
+  ingredients.addAll(['gold', 'titanium', 'xenon']);
+  // Adding a duplicate item has no effect.
+  ingredients.add('gold');
+  print('After add,ingredients = $ingredients');
+
+  // Remove an item from a set.
+  ingredients.remove('gold');
+  print('After remove,ingredients = $ingredients');
+
+  //Use contains() and containsAll() to check whether one or more objects are in a set:
+
+  // Check whether an item is in the set.
+  print("ingredients.contains('titanium')=${ingredients.contains('titanium')}");
+  // Check whether all the items are in the set.
+  var tobeFound = <String>['titanium', 'xenon'];
+  print(
+      "ingredients.containsAll(tobeFound)=${ingredients.containsAll(tobeFound)}");
+
+  ingredients.forEach(
+      (v) => print("ingredients.contains('$v')=${ingredients.contains(v)}"));
+
+  //An intersection is a set whose items are in two other sets.
+  ingredients.addAll(['gold', 'titanium', 'xenon']);
+
+  // Create the intersection of two sets.
+  var nobleGases = new Set.from(['xenon', 'argon']);
+  var intersection = ingredients.intersection(nobleGases);
+
+  print("ingredients.intersection($nobleGases) = $intersection}");
+
+  return 'End of _testLibCoreOfSet..';
+}
+
+_testLibCoreOfMap() async {
+  print("\n******-----begin _testLibCoreOfMap------\n");
+
+// Maps can be built from a constructor.
+  var map0 = new Map();
+  map0.addAll({3: '3.third', 2: '2.second', 4: '4.forth'});
+
+// Maps are parameterized types; you can specify what
+// types the key and value should be.
+
+  var map1 = new Map<int, String>();
+  map1.addAll({3: '3.third', 2: '2.second', 4: '4.forth'});
+
+//You add, get, and set map items using the bracket syntax.
+//Use remove() to remove a key and its value from a map.
+
+  var nobleGases = {3: '3.third', 2: '2.second', 4: '4.forth'};
+
+// Retrieve a value with a key.
+  print("nobleGases[2] = ${nobleGases[2]}");
+// set a value with a key.
+  nobleGases[2] = '2.changed second.';
+  print("after changed,nobleGases[2] = ${nobleGases[2]}");
+  nobleGases[1] = '1.first.';
+  print("after changed,nobleGases = $nobleGases");
+
+// Check whether a map contains a key.
+  print("nobleGases.containsKey(6) = ${nobleGases.containsKey(6)}");
+
+// Remove a key and its value.
+  nobleGases.remove(1);
+  print("after reomve(1),nobleGases = $nobleGases");
+  print(
+      "after reomve(1),nobleGases.containsKey(1) = ${nobleGases.containsKey(1)}");
+
+  // Maps often use strings as keys.
+//You can retrieve all the values or all the keys from a map:
+  var hawaiianBeaches = {
+    'Oahu': ['Waikiki', 'Kailua', 'Waimanalo'],
+    'Big Island': ['Wailea Bay', 'Pololu Beach'],
+    'Kauai': ['Hanalei', 'Poipu']
+  };
+
+  print("hawaiianBeaches = $hawaiianBeaches");
+// Get all the keys as an unordered collection
+// (an Iterable).
+  var keys = hawaiianBeaches.keys;
+  var keysSet = new Set.from(keys);
+  print("new Set.from(keys) = $keysSet");
+  print("new Set.from(keys).contains('Oahu') = ${keysSet.contains('Oahu')}");
+
+// Get all the values as an unordered collection
+// (an Iterable of Lists).
+  var valuesSet = hawaiianBeaches.values;
+  print("valuesSet = $valuesSet");
+  print(
+      "any item of valuesSet contains('Waikiki')? = ${valuesSet.any((v) => v.contains('Waikiki'))}");
+
+  var sortedValues = valuesSet.toList();
+  sortedValues.sort((a, b) => a[0].compareTo(b[0]));
+  print("sortedValues = $sortedValues");
+
+/* 
+To check whether a map contains a key, use containsKey(). 
+Because map values can be null, you cannot rely on simply getting 
+the value for the key and checking for null to determine the existence 
+of a key.
+*/
+  print(
+      "hawaiianBeaches.containsKey('Oahu') = ${hawaiianBeaches.containsKey('Oahu')}");
+
+/*
+Use the putIfAbsent() method when you want to assign 
+a value to a key if and only if the key does not already 
+exist in a map. You must provide a function that returns the value.
+*/
+
+  var teamAssignments = {};
+  teamAssignments.putIfAbsent('Catcher', () => "Catcher's value");
+  teamAssignments.putIfAbsent('Catcher', () => "Catcher's value changed");
+
+  print("teamAssignments = $teamAssignments");
+
+  return 'End of _testLibCoreOfMap..';
+}
+
+_testLibCoreCommon() async {
+  print("\n******-----begin _testLibCoreCommon------\n");
+
+//Use isEmpty or isNotEmpty to check whether a list, set, or map has items:
+  var coffees = [];
+  var teas = ['green', 'black', 'chamomile', 'earl grey'];
+  print("coffees.isEmpty = ${coffees.isEmpty}");
+  print("teas.isNotEmpty = ${teas.isNotEmpty}");
+
+//To apply a function to each item in a list, set, or map, you can use forEach():
+
+  teas.forEach((tea) => print('I drink $tea'));
+
+//When you invoke forEach() on a map, your function must take two arguments (the key and value):
+  var hawaiianBeaches = {
+    'Oahu': ['Waikiki', 'Kailua', 'Waimanalo'],
+    'Big Island': ['Wailea Bay', 'Pololu Beach'],
+    'Kauai': ['Hanalei', 'Poipu']
+  };
+
+  hawaiianBeaches.forEach((k, v) => print('I want to visit $k and swim at $v'));
+
+//Iterables provide the map() method, which gives you all the results in a single object:
+
+  var loudTeas = teas.map((tea) => tea.toUpperCase());
+  loudTeas.forEach(print);
+
+//Note: The object returned by map() is an Iterable that’s lazily evaluated:
+//your function isn’t called until you ask for an item from the returned object.
+//To force your function to be called immediately on each item,
+//use map().toList() or map().toSet():
+
+  var loudTeasList = teas.map((tea) => tea.toUpperCase()).toList();
+  loudTeasList.forEach(print);
+
+//Use Iterable’s where() method to get all the items that match a condition.
+//Use Iterable’s any() and every() methods to check whether some or all
+//items match a condition.
+
+  // var teas = ['green', 'black', 'chamomile', 'earl grey'];
+
+  // Chamomile is not caffeinated.
+  bool isDecaffeinated(String teaName) =>
+      (teaName[0] == 'c') || (teaName[0] == 'e');
+
+  // Use where() to find only the items that return true
+  // from the provided function.
+  var decaffeinatedTeas = teas.where((tea) => isDecaffeinated(tea));
+
+  print("decaffeinatedTeas(teas.where) = $decaffeinatedTeas");
+  // or teas.where(isDecaffeinated)
+  decaffeinatedTeas = teas.where(isDecaffeinated).toList();
+  print("decaffeinatedTeas(teas.where).tolist() = $decaffeinatedTeas");
+
+  // Use any() to check whether at least one item in the
+  // collection satisfies a condition.
+  print("teas.any(isDecaffeinated) = ${teas.any(isDecaffeinated)}");
+
+  // Use every() to check whether all the items in a
+  // collection satisfy a condition.
+  print("teas.every(isDecaffeinated) = ${teas.every(isDecaffeinated)}");
+  return 'End of _testLibCoreCommon..';
 }
