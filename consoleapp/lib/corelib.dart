@@ -3,7 +3,7 @@ void testLibCoreAsyc() async {
 
   var result0 = await _testLibCoreOfString();
   print('In testLibCoreAsyc: result0 is ${result0}');
-  
+
   result0 = await _testLibCoreOfList();
   print('In testLibCoreAsyc: result0 is ${result0}');
 
@@ -14,6 +14,9 @@ void testLibCoreAsyc() async {
   print('In testLibCoreAsyc: result0 is ${result0}');
 
   result0 = await _testLibCoreCommon();
+  print('In testLibCoreAsyc: result0 is ${result0}');
+
+  result0 = await _testLibCoreOthers();
   print('In testLibCoreAsyc: result0 is ${result0}');
 }
 
@@ -365,4 +368,131 @@ _testLibCoreCommon() async {
   // collection satisfy a condition.
   print("teas.every(isDecaffeinated) = ${teas.every(isDecaffeinated)}");
   return 'End of _testLibCoreCommon..';
+}
+
+_printURI(Uri uri) {
+  print('uri = $uri');
+  print('''
+      uri.scheme = ${uri.scheme}
+      uri.host = ${uri.host}
+      uri.port = ${uri.port}
+      uri.path = ${uri.path}
+      uri.fragment = ${uri.fragment}
+      uri.pathSegments = ${uri.pathSegments}
+      uri.queryParameters = ${uri.queryParameters}
+      uri.queryParametersAll = ${uri.queryParametersAll}
+      uri.query = ${uri.query}
+      ''');
+}
+
+_testLibCoreOthers() async {
+  print("\n******-----begin _testLibCoreOthers------\n");
+  //Parsing URIs
+  var uri = Uri.parse('http://example.org:8080/foo/bar?a=valueA&b=valueB#frag');
+  var uri2 = Uri.parse(
+      'http://example.org/foo/bar?a=valueA2&b=valueB2&a=valueA1&b=valueB1');
+  var uri3 = Uri.parse('Https://example.org/foo/bar');
+
+  _printURI(uri);
+  _printURI(uri2);
+  _printURI(uri3);
+
+  //build up a URI from individual parts using the `Uri()` constructor:
+  var uri4 = new Uri(
+      scheme: 'http',
+      host: 'example.org',
+      path: '/foo/bar',
+      fragment: 'frag',
+      queryParameters: {
+        'a': ['NewvalueA1', 'NewvalueA2'],
+        'b': ['NewvalueB1', 'NewvalueB2'],
+      });
+  _printURI(uri4);
+
+  print('\nNow begin test datetime...\n');
+
+  // Get the current date and time.
+  var y2k = new DateTime.now();
+  print('y2k DateTime.now() =$y2k');
+
+  // Specify the month and day.
+  y2k = new DateTime(2000, 1, 2); // January 2, 2000
+  print('y2k DateTime(2000, 1, 2) =$y2k');
+  // Specify the date as a UTC time.
+  y2k = new DateTime.utc(2000); // 1/1/2000, UTC
+  print('y2k DateTime.utc(2000) =$y2k');
+  // Specify a date and time in ms since the Unix epoch.
+  y2k = new DateTime.fromMillisecondsSinceEpoch(946684800000, isUtc: true);
+  print('y2k fromMillisecondsSinceEpoch(946684800000,isUtc: true) =$y2k');
+  // Parse an ISO 8601 date.
+  y2k = DateTime.parse('2000-01-01T00:00:00Z');
+  print("y2k parse('2000-01-01T00:00:00Z') =$y2k");
+
+  // Add one year.
+  var y2001 = y2k.add(const Duration(days: 366));
+  print("y2k.add(const Duration(days: 366) =$y2001");
+
+  // Subtract 30 days.
+  var december2000 = y2001.subtract(const Duration(days: 30));
+  print("y2001.subtract(const Duration(days: 30) =$december2000");
+
+  // Calculate the difference between two dates.
+  // Returns a Duration object.
+  var duration = y2001.difference(y2k);
+  print("y2001.difference(y2k)=$duration");
+
+  print('\nNow begin test Comparable class...\n');
+
+  var short = const Line(1);
+  var long = const Line(100);
+  print('(short.compareTo(long) < 0) = ${(short.compareTo(long) < 0)}');
+
+  print('\nNow begin test Map keys ...\n');
+
+  var p1 = new Person('Bob', 'Smith','1');
+  var p2 = new Person('Bob', 'Smith','2');
+  var p3 = 'not a person';
+  print('(p1.hashCode == ${p1.hashCode}),( p2.hashCode == ${p2.hashCode}');
+  print('(p1 == p2) = ${(p1 == p2)}');
+  print('(p1 != p3) = ${(p1 != p3)}');
+
+  return 'End of _testLibCoreOthers..';
+}
+
+class Line implements Comparable<Line> {
+  final int length;
+  const Line(this.length);
+
+  @override
+  int compareTo(Line other) => length - other.length;
+}
+
+class Person {
+  final String firstName, lastName,random;
+
+  Person(this.firstName, this.lastName,this.random);
+
+  // Override hashCode using strategy from Effective Java,
+  // Chapter 11.
+  //*
+  @override
+  int get hashCode {
+    int result = 17;
+    result = 37 * result + firstName.hashCode;
+    result = 37 * result + lastName.hashCode;
+    result += random.hashCode;
+    return result;
+  }
+  // */
+
+  // You should generally implement operator == if you
+  // override hashCode.
+  //*
+  @override
+  bool operator ==(dynamic other) {
+    if (other is! Person) return false;
+    Person person = other;
+    return (person.firstName == firstName && person.lastName == lastName);
+  }
+  // */
 }
