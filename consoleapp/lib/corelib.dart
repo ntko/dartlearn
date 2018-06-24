@@ -456,6 +456,23 @@ _testLibCoreOthers() async {
   print('(p1 == p2) = ${(p1 == p2)}');
   print('(p1 != p3) = ${(p1 != p3)}');
 
+  print('\nNow begin test custom FooException class...\n');  
+  try{
+    throw new FooException('This is custom FooException');
+  }
+  on FooException catch (e,s) {
+    print('Exception details:\n $e');
+    print('Stack trace:\n $s');
+  }
+  on Exception catch (e) {
+    print('Exception details:\n $e');
+  } catch (e, s) {
+    print('Exception details:\n $e');
+    print('Stack trace:\n $s');
+  } finally {
+    print('finally executed\n');
+  }
+
   return 'End of _testLibCoreOthers..';
 }
 
@@ -496,3 +513,12 @@ class Person {
   }
   // */
 }
+
+class FooException implements Exception {
+      final String msg;
+
+      const FooException([this.msg]);
+
+      @override
+      String toString() => msg ?? 'FooException';
+    }

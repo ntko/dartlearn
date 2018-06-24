@@ -13,6 +13,7 @@ import 'package:consoleapp/class.dart' as classtest;
 import 'package:consoleapp/others.dart' as othertest;
 
 import 'package:consoleapp/corelib.dart' as corelibtest;
+import 'package:consoleapp/futurelib.dart' as futurelibtest;
 
 import 'package:consoleapp/todo.dart';
 
@@ -69,6 +70,7 @@ main(List<String> arguments) {
 
   corelibtest.testLibCoreAsyc();
 
+  futurelibtest.testLibFuturecAsyc();
 
   print('\n------------End of Main().');
 }
