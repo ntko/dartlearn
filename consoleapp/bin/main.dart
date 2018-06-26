@@ -14,6 +14,8 @@ import 'package:consoleapp/others.dart' as othertest;
 
 import 'package:consoleapp/corelib.dart' as corelibtest;
 import 'package:consoleapp/futurelib.dart' as futurelibtest;
+import 'package:consoleapp/mathlib.dart' as mathlibtest;
+import 'package:consoleapp/convertlib.dart' as convertlibtest;
 
 import 'package:consoleapp/todo.dart';
 
@@ -71,6 +73,10 @@ main(List<String> arguments) {
   corelibtest.testLibCoreAsyc();
 
   futurelibtest.testLibFuturecAsyc();
+
+  mathlibtest.testLibMathAsyc();
+
+  convertlibtest.testConvertLib();
 
   print('\n------------End of Main().');
 }
