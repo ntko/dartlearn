@@ -3,6 +3,10 @@
 .packages
 .pub/
 build/
+
+#temp files created by test app
+bin/quotes.txt
+
 # Remove the following pattern if you wish to check in your lock file
 pubspec.lock
 

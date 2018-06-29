@@ -8,7 +8,7 @@
             "name": "Dart",
             "program": "${workspaceFolder}/bin/main.dart",
             "args": [
-                "1","test"
+                "1","test","-np"
             ],
             "vmAdditionalArgs": [
                 "--preview-dart-2"

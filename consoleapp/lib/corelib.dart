@@ -1,7 +1,7 @@
 void testLibCoreAsyc() async {
   print("\n******-----testLibCoreAsyc-------------------\n");
 
-  var result0 = await _testLibCoreOfString();
+/*   var result0 = await _testLibCoreOfString();
   print('In testLibCoreAsyc: result0 is ${result0}');
 
   result0 = await _testLibCoreOfList();
@@ -17,7 +17,19 @@ void testLibCoreAsyc() async {
   print('In testLibCoreAsyc: result0 is ${result0}');
 
   result0 = await _testLibCoreOthers();
-  print('In testLibCoreAsyc: result0 is ${result0}');
+  print('In testLibCoreAsyc: result0 is ${result0}'); */
+
+  _testLibCoreOfString();
+
+  _testLibCoreOfList();
+
+  _testLibCoreOfSet();
+
+  _testLibCoreOfMap();
+
+  _testLibCoreCommon();
+
+  _testLibCoreOthers();
 }
 
 _testLibCoreOfString() async {
@@ -449,22 +461,20 @@ _testLibCoreOthers() async {
 
   print('\nNow begin test Map keys ...\n');
 
-  var p1 = new Person('Bob', 'Smith','1');
-  var p2 = new Person('Bob', 'Smith','2');
+  var p1 = new Person('Bob', 'Smith', '1');
+  var p2 = new Person('Bob', 'Smith', '2');
   var p3 = 'not a person';
   print('(p1.hashCode == ${p1.hashCode}),( p2.hashCode == ${p2.hashCode}');
   print('(p1 == p2) = ${(p1 == p2)}');
   print('(p1 != p3) = ${(p1 != p3)}');
 
-  print('\nNow begin test custom FooException class...\n');  
-  try{
+  print('\nNow begin test custom FooException class...\n');
+  try {
     throw new FooException('This is custom FooException');
-  }
-  on FooException catch (e,s) {
+  } on FooException catch (e, s) {
     print('Exception details:\n $e');
     print('Stack trace:\n $s');
-  }
-  on Exception catch (e) {
+  } on Exception catch (e) {
     print('Exception details:\n $e');
   } catch (e, s) {
     print('Exception details:\n $e');
@@ -485,9 +495,9 @@ class Line implements Comparable<Line> {
 }
 
 class Person {
-  final String firstName, lastName,random;
+  final String firstName, lastName, random;
 
-  Person(this.firstName, this.lastName,this.random);
+  Person(this.firstName, this.lastName, this.random);
 
   // Override hashCode using strategy from Effective Java,
   // Chapter 11.
@@ -515,10 +525,10 @@ class Person {
 }
 
 class FooException implements Exception {
-      final String msg;
+  final String msg;
 
-      const FooException([this.msg]);
+  const FooException([this.msg]);
 
-      @override
-      String toString() => msg ?? 'FooException';
-    }
+  @override
+  String toString() => msg ?? 'FooException';
+}

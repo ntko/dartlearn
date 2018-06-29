@@ -2,7 +2,8 @@ import 'dart:math';
 
 
 void testLibMathAsyc() async {
-  await _testLibMath();
+  //await _testLibMath();
+  _testLibMath();
 } 
 _testLibMath() async {
   print("\n******-----testLibMathAsyc -------------------\n");
